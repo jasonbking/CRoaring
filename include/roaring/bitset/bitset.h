@@ -2,7 +2,9 @@
 #define CBITSET_BITSET_H
 
 // For compatibility with MSVC with the use of `restrict`
-#if (__STDC_VERSION__ >= 199901L) || \
+#if defined(__GNUC__)
+#define	CBITSET_RESTRICT __restrict__
+#elif (__STDC_VERSION__ >= 199901L) || \
     (defined(__GNUC__) && defined(__STDC_VERSION__))
 #define CBITSET_RESTRICT restrict
 #else
