@@ -1,16 +1,16 @@
 #ifndef CBITSET_BITSET_H
 #define CBITSET_BITSET_H
 
-// For compatibility with MSVC with the use of `restrict`
-#if defined(__GNUC__)
-#define	CBITSET_RESTRICT __restrict__
-#elif (__STDC_VERSION__ >= 199901L) || \
-    (defined(__GNUC__) && defined(__STDC_VERSION__))
+// The restrict keyword exists in C99 or later, but does not exist in C++.
+// However g++/gcc, clang (c/c++), and MSVC (at least 2015 and later) all
+// support the __restrict keyword.
+#if defined(__GNUC__) || defined(__clang__) || (__MSC_VER >= 1900)
+#define CBITSET_RESTRICT __restrict
+#elif !defined(__cplusplus) && (__STDC_VERSION__ >= 199901L)
 #define CBITSET_RESTRICT restrict
 #else
 #define CBITSET_RESTRICT
-#endif  // (__STDC_VERSION__ >= 199901L) || (defined(__GNUC__) &&
-        // defined(__STDC_VERSION__ ))
+#endif  // defined(__GNUC__) || defined(__clang__) || (__MSC_VER >= 1900)
 
 #include <stdbool.h>
 #include <stdint.h>
